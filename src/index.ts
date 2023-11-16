@@ -44,7 +44,8 @@ getRandomElement<number>([5, 6, 21, 354, 567, 234, 654]);
 getRandomElement([1, 2, 3, 4]);
 
 // Generics With Multiple Types
-function merge<T, U>(object1: T, object2: U) {
+// Generics With Constraints:
+function merge<T extends object, U extends object>(object1: T, object2: U) {
   return {
     ...object1,
     ...object2,
@@ -52,9 +53,27 @@ function merge<T, U>(object1: T, object2: U) {
 }
 
 const comboObj = merge({name:"colt"}, {pets: ["blue", "elton"]});
+console.log(merge ({name:"colt"}, {num: 9}));
 
 // merge<{name: string}, {pets: string[]}>({name:"colt"}, {pets:["blue", "elton"]})
 
+interface Lenghthy {
+  length: number;
+}
+
+function printDoubleLength<T extends Lenghthy>(thing: T): number {
+  return thing.length * 2;
+}
+
+printDoubleLength("asdf");
+printDoubleLength(123);
+
+function makeEmptyArray<T = number>() : T[]{
+  return []
+}
+
+const number = makeEmptyArray();
+const bool = makeEmptyArray<boolean>()
 
 // // Providing a type to querySelector:
 // const inputEl = document.querySelector<HTMLInputElement>("#username")!;
